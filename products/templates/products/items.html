@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+    <div class="container mt-5">
+  <div class="row">
+    {% for product in products %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+            <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}">
+          
+          <div class="card-body">
+            <h5 class="card-title">{{ product.name }}</h5>
+            <p class="card-text">{{ product.description|truncatewords:20 }}</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><strong>Category:</strong> {{ product.category }}</li>
+              <li class="list-group-item"><strong>Price:</strong> ${{ product.price }}</li>
+              <li class="list-group-item"><strong>Country:</strong> {{ product.country }}</li>
+            </ul>
+          </div>
+
+          <div class="card-footer text-muted">
+            Created: {{ product.creation_date }}<br>
+            Expires: {{ product.expiry_date }}
+          </div>
+        </div>
+      </div>
+    {% empty %}
+      <p>No products found.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock content %}
+    
+
