@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 
+from .forms import ProductForm
 from products.models import Categories, Product, User
 
 # Create your views here.
@@ -7,34 +8,49 @@ from products.models import Categories, Product, User
 def base(request):
     return render(request, 'base.html')
 
-def home(request):
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        description = request.POST.get('description')
-        creation_date = request.POST.get('creation_date')
-        expiry_date = request.POST.get('expiry_date')
-        category = request.POST.get('category')
-        price = request.POST.get('price')
-        country = request.POST.get('country')
-        image = request.FILES.get('image') 
+# def home(request):
+#     if request.method == 'POST':
+#         name = request.POST.get('name')
+#         description = request.POST.get('description')
+#         creation_date = request.POST.get('creation_date')
+#         expiry_date = request.POST.get('expiry_date')
+#         category = request.POST.get('category')
+#         price = request.POST.get('price')
+#         country = request.POST.get('country')
+#         image = request.FILES.get('image') 
 
-        Product.objects.create(
-            name=name,
-            description=description,
-            creation_date=creation_date,
-            expiry_date=expiry_date,
-            category=Categories.objects.get(name=category),
-            price=price,
-            country=country,
-            image=image
-        )
-        return redirect('items')
+#         Product.objects.create(
+#             name=name,
+#             description=description,
+#             creation_date=creation_date,
+#             expiry_date=expiry_date,
+#             category=Categories.objects.get(name=category),
+#             price=price,
+#             country=country,
+#             image=image
+#         )
+#         return redirect('items')
     
-    username = request.session.get('username')
-    if not username:
+#     username = request.session.get('username')
+#     if not username:
+#         return redirect('login')
+
+#     return render(request, 'products/home.html', {'categories': Categories.objects.all()})
+
+
+def home(request):
+    if not request.session.get('username'):
         return redirect('login')
 
-    return render(request, 'products/home.html', {'categories': Categories.objects.all()})
+    if request.method == 'POST':
+        form = ProductForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('items')
+    else:
+        form = ProductForm()
+
+    return render(request, 'products/home.html', {'form': form})
 
 def items(request):
     products = Product.objects.all()

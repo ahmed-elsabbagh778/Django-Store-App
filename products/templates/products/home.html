@@ -18,7 +18,7 @@ Add Product
   >
     {% csrf_token %}
 
-    <div class="row mb-3">
+    {% comment %} <div class="row mb-3">
       <div class="col-md-6">
         <label for="name" class="form-label">Product Name</label>
         <input
@@ -98,7 +98,9 @@ Add Product
         <label for="image" class="form-label">Product Image</label>
         <input type="file" name="image" id="image" class="form-control" />
       </div>
-    </div>
+    </div> {% endcomment %}
+
+    {{form.as_p}}
 
     <div class="text-center">
       <button type="submit" class="btn btn-primary px-5">Add Product</button>
