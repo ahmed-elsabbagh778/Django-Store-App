@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
+from django.views import View
 
-from .forms import ProductForm
+from .forms import ProductForm, RegisterForm
 from products.models import Categories, Product, User
 
 # Create your views here.
@@ -52,13 +53,29 @@ def home(request):
 
     return render(request, 'products/home.html', {'form': form})
 
-def items(request):
-    products = Product.objects.all()
-    categories = Categories.objects.all()
-    username = request.session.get('username')
-    if not username:
-        return redirect('login')
-    return render(request, 'products/items.html', {'products': products , 'categories': categories})
+# def items(request):
+#     products = Product.objects.all()
+#     categories = Categories.objects.all()
+#     username = request.session.get('username')
+#     if not username:
+#         return redirect('login')
+#     return render(request, 'products/items.html', {'products': products , 'categories': categories})
+
+class Items(View):
+    template_name = 'products/items.html'
+
+    def get(self, request, *args, **kwargs):
+        username = request.session.get('username')
+        if not username:
+            return redirect('login')
+
+        products = Product.objects.all()
+        categories = Categories.objects.all()
+
+        return render(request, 'products/items.html', {
+            'products': products,
+            'categories': categories
+        })
 
 def delete(request, id):
     product = Product.objects.get(id=id)
@@ -84,17 +101,33 @@ def update(request, id):
         return redirect('items')
     
 
+# def register(request):
+#     if request.method == 'POST':
+#         if request.POST.get('password') == request.POST.get('confirm_password'):
+#             User.objects.create(
+#                     username=request.POST.get('username'),
+#                     email=request.POST.get('email'),
+#                     password=request.POST.get('password')
+#                 )
+#             return redirect('login')
+            
+#     return render(request, 'register.html')
+
 def register(request):
     if request.method == 'POST':
-        if request.POST.get('password') == request.POST.get('confirm_password'):
+        registerForm = RegisterForm(request.POST)
+        if registerForm.is_valid():
             User.objects.create(
-                    username=request.POST.get('username'),
-                    email=request.POST.get('email'),
-                    password=request.POST.get('password')
-                )
+                username=request.POST.get('username'),
+                email=request.POST.get('email'),
+                password=request.POST.get('password')
+            )
             return redirect('login')
-            
-    return render(request, 'register.html')
+    else:
+        registerForm = RegisterForm()
+        
+    return render(request, 'register.html', {'registerForm': registerForm})
+
 
 def login(request):
     if request.method == 'POST':
