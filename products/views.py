@@ -62,9 +62,8 @@ def home(request):
 #     return render(request, 'products/items.html', {'products': products , 'categories': categories})
 
 class Items(View):
-    template_name = 'products/items.html'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         username = request.session.get('username')
         if not username:
             return redirect('login')
