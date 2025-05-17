@@ -28,7 +28,7 @@ This project is a basic store website built with Django. It allows users to regi
    ```
 
 2. Create a virtual environment and activate it:
-  ``` bash
+  ```bash
    python -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
   ```
@@ -45,6 +45,11 @@ This project is a basic store website built with Django. It allows users to regi
    ```
    python manage.py runserver
    ```
+
+## Notes
+- Product images are uploaded and stored in the media/ folder.
+- Bootstrap is used for styling and is included via static files.
+- The user session is used to manage login status.
 
 ## License
 This project is for educational purposes. You may use or modify it freely.
