@@ -30,6 +30,9 @@ class ProductForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'date',
             }),
+            'country': forms.TextInput(attrs={
+                'class': 'form-control',
+            }),
             'image': forms.ClearableFileInput(attrs={
                 'class': 'form-control',
             }),

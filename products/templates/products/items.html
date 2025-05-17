@@ -62,59 +62,63 @@
     <div class="modal fade" id="updateModal{{ product.id }}" tabindex="-1" aria-labelledby="updateModalLabel{{ product.id }}" aria-hidden="true">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <form method="POST" action={% url 'update' product.id %} enctype="multipart/form-data">
+      <form method="POST" action="{% url 'update' product.id %}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="modal-header">
           <h5 class="modal-title" id="updateModalLabel{{ product.id }}">Update {{ product.name }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
         <div class="modal-body">
-          <div class="mb-3">
-            <label for="name{{ product.id }}" class="form-label">Product Name</label>
-            <input type="text" name="name" id="name{{ product.id }}" class="form-control" value="{{ product.name }}">
-          </div>
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label for="name{{ product.id }}" class="form-label">Product Name</label>
+              <input type="text" name="name" id="name{{ product.id }}" class="form-control" value="{{ product.name }}">
+            </div>
 
-          <div class="mb-3">
-            <label for="description{{ product.id }}" class="form-label">Description</label>
-            <input type="text" name="description" id="description{{ product.id }}" class="form-control" value="{{ product.description }}">
-          </div>
+            <div class="col-md-6 mb-3">
+              <label for="price{{ product.id }}" class="form-label">Price</label>
+              <input type="number" name="price" id="price{{ product.id }}" class="form-control" value="{{ product.price }}">
+            </div>
 
-          <div class="mb-3">
-            <label for="creation_date{{ product.id }}" class="form-label">Creation Date</label>
-            <input type="date" name="creation_date" id="creation_date{{ product.id }}" class="form-control" value="{{ product.creation_date|date:'Y-m-d' }}">
-          </div>
+            <div class="col-md-6 mb-3">
+              <label for="creation_date{{ product.id }}" class="form-label">Creation Date</label>
+              <input type="date" name="creation_date" id="creation_date{{ product.id }}" class="form-control" value="{{ product.creation_date|date:'Y-m-d' }}">
+            </div>
 
-          <div class="mb-3">
-            <label for="expiry_date{{ product.id }}" class="form-label">Expiry Date</label>
-            <input type="date" name="expiry_date" id="expiry_date{{ product.id }}" class="form-control" value="{{ product.expiry_date|date:'Y-m-d' }}">
-          </div>
+            <div class="col-md-6 mb-3">
+              <label for="expiry_date{{ product.id }}" class="form-label">Expiry Date</label>
+              <input type="date" name="expiry_date" id="expiry_date{{ product.id }}" class="form-control" value="{{ product.expiry_date|date:'Y-m-d' }}">
+            </div>
 
-          <div class="mb-3">
-            <label for="category{{ product.id }}" class="form-label">Category</label>
-            <select name="category" id="category{{ product.id }}" class="form-select">
-              {% for cat in categories %}
-                <option value="{{ cat.name }}" {% if cat.name == product.category.name %}selected{% endif %}>
-                  {{ cat.name }}
-                </option>
-              {% endfor %}
-            </select>
-          </div>
+            <div class="col-md-6 mb-3">
+              <label for="category{{ product.id }}" class="form-label">Category</label>
+              <select name="category" id="category{{ product.id }}" class="form-select">
+                {% for cat in categories %}
+                  <option value="{{ cat.name }}" {% if cat.name == product.category.name %}selected{% endif %}>
+                    {{ cat.name }}
+                  </option>
+                {% endfor %}
+              </select>
+            </div>
 
-          <div class="mb-3">
-            <label for="price{{ product.id }}" class="form-label">Price</label>
-            <input type="number" name="price" id="price{{ product.id }}" class="form-control" value="{{ product.price }}">
-          </div>
+            <div class="col-md-6 mb-3">
+              <label for="country{{ product.id }}" class="form-label">Country</label>
+              <input type="text" name="country" id="country{{ product.id }}" class="form-control" value="{{ product.country }}">
+            </div>
 
-          <div class="mb-3">
-            <label for="country{{ product.id }}" class="form-label">Country</label>
-            <input type="text" name="country" id="country{{ product.id }}" class="form-control" value="{{ product.country }}">
-          </div>
+            <div class="col-12 mb-3">
+              <label for="description{{ product.id }}" class="form-label">Description</label>
+              <input type="text" name="description" id="description{{ product.id }}" class="form-control" value="{{ product.description }}">
+            </div>
 
-          <div class="mb-3">
-            <label for="image{{ product.id }}" class="form-label">Product Image</label>
-            <input type="file" name="image" id="image{{ product.id }}" class="form-control">
+            <div class="col-12 mb-3">
+              <label for="image{{ product.id }}" class="form-label">Product Image</label>
+              <input type="file" name="image" id="image{{ product.id }}" class="form-control">
+            </div>
           </div>
         </div>
+
         <div class="modal-footer">
           <button type="submit" class="btn btn-success">Save changes</button>
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>

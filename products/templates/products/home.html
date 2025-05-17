@@ -1,7 +1,5 @@
 {% extends 'base.html' %} 
-{% block title %} 
-Add Product 
-{% endblock title %}
+{% block title %}Add Product{% endblock title %}
 {% block content %}
 
 <link
@@ -11,96 +9,74 @@ Add Product
 
 <div class="container mt-5">
   <h2 class="mb-4">Add Product</h2>
-  <form
-    method="post"
-    enctype="multipart/form-data"
-    class="border p-4 rounded shadow bg-light"
-  >
+  <form method="post" enctype="multipart/form-data" class="border p-4 rounded shadow bg-light">
     {% csrf_token %}
 
-    {% comment %} <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="name" class="form-label">Product Name</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          class="form-control"
-          placeholder="Product Name"
-        />
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {% if form.name.errors %}
+          <div class="text-danger small">{{ form.name.errors }}</div>
+        {% endif %}
       </div>
-      <div class="col-md-6">
-        <label for="description" class="form-label">Product Description</label>
-        <input
-          type="text"
-          name="description"
-          id="description"
-          class="form-control"
-          placeholder="Product Description"
-        />
+
+      <div class="col-md-6 mb-3">
+        {{ form.price.label_tag }}
+        {{ form.price }}
+        {% if form.price.errors %}
+          <div class="text-danger small">{{ form.price.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6 mb-3">
+        {{ form.category.label_tag }}
+        {{ form.category }}
+        {% if form.category.errors %}
+          <div class="text-danger small">{{ form.category.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6 mb-3">
+        {{ form.image.label_tag }}
+        {{ form.image }}
+        {% if form.image.errors %}
+          <div class="text-danger small">{{ form.image.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6 mb-3">
+        {{ form.creation_date.label_tag }}
+        {{ form.creation_date }}
+        {% if form.creation_date.errors %}
+          <div class="text-danger small">{{ form.creation_date.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="col-md-6 mb-3">
+        {{ form.expiry_date.label_tag }}
+        {{ form.expiry_date }}
+        {% if form.expiry_date.errors %}
+          <div class="text-danger small">{{ form.expiry_date.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="col-6 mb-3">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+        {% if form.description.errors %}
+          <div class="text-danger small">{{ form.description.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="col-6 mb-3">
+        {{ form.country.label_tag }}
+        {{ form.country }}
+        {% if form.country.errors %}
+          <div class="text-danger small">{{ form.country.errors }}</div>
+        {% endif %}
       </div>
     </div>
-
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="creation_date" class="form-label">Creation Date</label>
-        <input
-          type="date"
-          name="creation_date"
-          id="creation_date"
-          class="form-control"
-        />
-      </div>
-      <div class="col-md-6">
-        <label for="expiry_date" class="form-label">Expiration Date</label>
-        <input
-          type="date"
-          name="expiry_date"
-          id="expiry_date"
-          class="form-control"
-        />
-      </div>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="category" class="form-label">Category</label>
-        <select name="category" id="category" class="form-select">
-          {% for value in categories %}
-          <option value="{{ value }}">{{ value }}</option>
-          {% endfor %}
-        </select>
-      </div>
-      <div class="col-md-6">
-        <label for="price" class="form-label">Price</label>
-        <input
-          type="number"
-          name="price"
-          id="price"
-          class="form-control"
-          placeholder="Price"
-        />
-      </div>
-    </div>
-
-    <div class="row mb-3">
-      <div class="col-md-6">
-        <label for="country" class="form-label">Country</label>
-        <input
-          type="text"
-          name="country"
-          id="country"
-          class="form-control"
-          placeholder="Country"
-        />
-      </div>
-      <div class="col-md-6">
-        <label for="image" class="form-label">Product Image</label>
-        <input type="file" name="image" id="image" class="form-control" />
-      </div>
-    </div> {% endcomment %}
-
-    {{form.as_p}}
 
     <div class="text-center">
       <button type="submit" class="btn btn-primary px-5">Add Product</button>
